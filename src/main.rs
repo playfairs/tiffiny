@@ -1,23 +1,22 @@
-use anyhow::Result;
 use clap::Parser;
 use std::fs;
 use tiffiny::{cli, ImageGenerator, utils};
 
-fn main() -> Result<()> {
+fn main() -> Result<(), ()> {
     let cli_args = cli::Cli::parse();
 
     match cli_args.command {
         cli::Commands::Convert { input, output, width, height, format: _ } => {
-            let clean_input = utils::strip_quotes(&input);
-            let clean_output = utils::strip_quotes(&output);
+            let clean_input = utils::normalize(&utils::strip_quotes(&input));
+            let clean_output = utils::normalize(&utils::strip_quotes(&output));
             ImageGenerator::audio_to_image(&clean_input, &clean_output, width, height)?;
             println!("Image written to {}", clean_output);
         }
 
         cli::Commands::Inspect { input } => {
-            let clean_input = utils::strip_quotes(&input);
-            let metadata = fs::metadata(&clean_input)?;
-            let data = fs::read(&clean_input)?;
+            let clean_input = utils::normalize(&utils::strip_quotes(&input));
+            let metadata = fs::metadata(&clean_input).unwrap();
+            let data = fs::read(&clean_input).unwrap();
 
             println!("tiffiny::inspect");
             println!("  file: {}", clean_input);

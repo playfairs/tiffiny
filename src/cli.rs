@@ -10,10 +10,10 @@ pub struct Cli {
 #[derive(Subcommand)]
 pub enum Commands {
     Convert {
-        #[arg(short, long, help = "Input audio file (MP3)")]
+        #[arg(help = "Input audio file (MP3)")]
         input: String,
 
-        #[arg(short, long, help = "Output image file")]
+        #[arg(help = "Output image file")]
         output: String,
 
         #[arg(short, long, default_value_t = 512, help = "Image width in pixels")]

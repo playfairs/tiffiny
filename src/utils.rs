@@ -1,5 +1,9 @@
+
 pub fn strip_quotes(path: &str) -> String {
     path.trim_matches(|c| c == '"' || c == '\'').to_string()
+}
+pub fn normalize(path: &str) -> String {
+    path.replace('~', &std::env::home_dir().unwrap().display().to_string()).to_string()
 }
 
 pub fn calculate_entropy(data: &[u8]) -> f64 {

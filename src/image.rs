@@ -1,4 +1,3 @@
-use anyhow::{Result, Context};
 use image::{RgbImage, ImageFormat};
 use std::fs;
 use indicatif::{ProgressBar, ProgressStyle};
@@ -6,7 +5,7 @@ use indicatif::{ProgressBar, ProgressStyle};
 pub struct ImageGenerator;
 
 impl ImageGenerator {
-    pub fn audio_to_image(input: &str, output: &str, width: u32, height: u32) -> Result<()> {
+    pub fn audio_to_image(input: &str, output: &str, width: u32, height: u32) -> Result<(), ()> {
         let pb = ProgressBar::new(3);
         pb.set_style(
             ProgressStyle::with_template("[{bar:40}] {pos}/{len} {msg}")
@@ -14,9 +13,8 @@ impl ImageGenerator {
         );
 
         pb.set_message("reading audio file");
-        let expanded_input = shellexpand::tilde(input).into_owned();
-        let audio_data = fs::read(&expanded_input)
-            .with_context(|| format!("Failed to read audio file: {}", input))?;
+        let audio_data = fs::read(&input)
+            .expect(&format!("Failed to read audio file: {}", input));
         pb.inc(1);
 
         pb.set_message("creating image from audio data");
@@ -40,11 +38,11 @@ impl ImageGenerator {
         pixels
     }
 
-    pub fn save_as_tiff(pixels: Vec<u8>, width: u32, height: u32, output: &str) -> Result<()> {
-        let expanded_output = shellexpand::tilde(output).into_owned();
+    pub fn save_as_tiff(pixels: Vec<u8>, width: u32, height: u32, output: &str) -> Result<(), ()> {
         let img = RgbImage::from_raw(width, height, pixels)
-            .context("Failed to construct image buffer")?;
-        img.save_with_format(&expanded_output, ImageFormat::Tiff)
-            .with_context(|| format!("Failed to save TIFF file: {}", output))
+            .expect("Failed to construct image buffer");
+        img.save_with_format(&output, ImageFormat::Tiff)
+            .expect(&format!("Failed to save TIFF file: {}", output));
+        Ok(())
     }
 }

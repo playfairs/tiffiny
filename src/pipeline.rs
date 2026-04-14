@@ -1,5 +1,4 @@
 use crate::{audio, image};
-use anyhow::Result;
 use indicatif::{ProgressBar, ProgressStyle};
 
 pub fn convert_audio_to_image(
@@ -7,7 +6,7 @@ pub fn convert_audio_to_image(
     output: &str,
     width: u32,
     height: u32,
-) -> Result<()> {
+) -> Result<(), ()> {
     println!("tiffiny::convert");
     println!("  input:  {}", input);
     println!("  output: {}", output);
