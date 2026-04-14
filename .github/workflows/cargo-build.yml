@@ -1,0 +1,40 @@
+name: Cargo-Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build --verbose --target x86_64-unknown-linux-gnu
+    - name: Run tests
+      run: cargo test --verbose
+
+  build-linux-arm:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build --verbose --target aarch64-unknown-linux-gnu
+    - name: Run tests
+      run: cargo test --verbose
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build (Windows x86_64)
+      run: cargo build --verbose --target x86_64-pc-windows-msvc
+    - name: Build (Windows aarch64)
+      run: cargo build --verbose --target aarch64-pc-windows-msvc
+    - name: Run tests
+      run: cargo test --verbose
