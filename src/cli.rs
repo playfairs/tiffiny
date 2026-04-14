@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(author, version, about = "Turn audio into cursed images", long_about = None)]
+#[command(author, version, about = "Convert Audio files into Images using TIFF Headers and RAW Data Manipulation.", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Commands,

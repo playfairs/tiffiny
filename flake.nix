@@ -1,5 +1,5 @@
 {
-  description = "tiffiny - CLI Tool to convert MP3 files into Images using TIFF Headers and RAW Data.";
+  description = "tiffiny - Convert Audio files into Images using TIFF Headers and RAW Data Manipulation.";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { nixpkgs, ... }:
