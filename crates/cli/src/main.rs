@@ -2,7 +2,7 @@ use clap::Parser;
 use std::fs;
 use cli::cli;
 use core::{Config, utils};
-use image::ImageGenerator;
+use image_proc::ImageGenerator;
 
 fn main() -> Result<(), ()> {
     let cli_args = cli::Cli::parse();

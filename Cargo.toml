@@ -2,7 +2,7 @@
 resolver = "3"
 members = [
     "crates/core",
-    "crates/image", 
+    "crates/image-proc", 
     "crates/cli"
 ]
 

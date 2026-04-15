@@ -1,5 +1,5 @@
 [package]
-name = "image"
+name = "image-proc"
 version = "0.1.0"
 edition = "2024"
 description = "Image processing functionality for tiffiny"

@@ -11,4 +11,4 @@ path = "src/main.rs"
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
 core = { path = "../core" }
-image = { path = "../image" }
+image-proc = { path = "../image-proc" }
