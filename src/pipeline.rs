@@ -23,7 +23,7 @@ pub fn convert_audio_to_image(
     pb.inc(1);
 
     pb.set_message("creating image from audio data");
-    let pixels = image::ImageGenerator::bytes_to_pixels(&raw_audio, width, height);
+    let pixels = image::ImageGenerator::bytes_to_pixels(&raw_audio, width, height, "raw", 1, "rgb", "linear");
     pb.inc(1);
 
     pb.set_message("writing PNG file");
