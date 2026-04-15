@@ -21,8 +21,8 @@ impl ImageGenerator {
         let pixels = Self::bytes_to_pixels(&audio_data, width, height);
         pb.inc(1);
 
-        pb.set_message("writing TIFF file");
-        Self::save_as_tiff(pixels, width, height, output)?;
+        pb.set_message("writing PNG file");
+        Self::save_as_png(pixels, width, height, output)?;
         pb.inc(1);
 
         pb.finish_with_message("done");
@@ -38,11 +38,11 @@ impl ImageGenerator {
         pixels
     }
 
-    pub fn save_as_tiff(pixels: Vec<u8>, width: u32, height: u32, output: &str) -> Result<(), ()> {
+    pub fn save_as_png(pixels: Vec<u8>, width: u32, height: u32, output: &str) -> Result<(), ()> {
         let img = RgbImage::from_raw(width, height, pixels)
             .expect("Failed to construct image buffer");
-        img.save_with_format(&output, ImageFormat::Tiff)
-            .expect(&format!("Failed to save TIFF file: {}", output));
+        img.save_with_format(&output, ImageFormat::Png)
+            .expect(&format!("Failed to save PNG file: {}", output));
         Ok(())
     }
 }

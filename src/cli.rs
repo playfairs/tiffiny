@@ -13,17 +13,14 @@ pub enum Commands {
         #[arg(help = "Input audio file (MP3)")]
         input: String,
 
-        #[arg(help = "Output image file")]
-        output: String,
+        #[arg(short, long, help = "Output image file (defaults to input filename with .png extension)")]
+        output: Option<String>,
 
-        #[arg(short, long, default_value_t = 512, help = "Image width in pixels")]
+        #[arg(long, default_value_t = 1024, help = "Image width in pixels")]
         width: u32,
 
-        #[arg(short = 'H', long, default_value_t = 512, help = "Image height in pixels")]
+        #[arg(long, default_value_t = 768, help = "Image height in pixels")]
         height: u32,
-
-        #[arg(long, default_value = "rgb", help = "Output format: rgb, rgba")]
-        format: String,
     },
 
     Inspect {

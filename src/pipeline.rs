@@ -26,8 +26,8 @@ pub fn convert_audio_to_image(
     let pixels = image::ImageGenerator::bytes_to_pixels(&raw_audio, width, height);
     pb.inc(1);
 
-    pb.set_message("writing TIFF file");
-    image::ImageGenerator::save_as_tiff(pixels, width, height, output)?;
+    pb.set_message("writing PNG file");
+    image::ImageGenerator::save_as_png(pixels, width, height, output)?;
     pb.inc(1);
 
     pb.finish_with_message("done");
