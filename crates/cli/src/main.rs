@@ -1,6 +1,8 @@
 use clap::Parser;
 use std::fs;
-use tiffiny::{cli, ImageGenerator, utils, config::Config};
+use cli::cli;
+use core::{Config, utils};
+use image::ImageGenerator;
 
 fn main() -> Result<(), ()> {
     let cli_args = cli::Cli::parse();

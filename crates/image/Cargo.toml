@@ -1,0 +1,10 @@
+[package]
+name = "image"
+version = "0.1.0"
+edition = "2024"
+description = "Image processing functionality for tiffiny"
+
+[dependencies]
+image = "0.25"
+indicatif = "0.17"
+core = { path = "../core" }
