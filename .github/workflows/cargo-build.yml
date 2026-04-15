@@ -134,7 +134,7 @@ jobs:
 
   release:
     if: github.event_name == 'release'
-    needs: [build-linux, build-linux-arm, build-windows, build-macos]
+    needs: [build-linux-arm, build-windows, build-macos]
     runs-on: ubuntu-latest
     steps:
     - name: Download all artifacts
