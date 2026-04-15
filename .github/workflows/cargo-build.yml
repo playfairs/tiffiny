@@ -29,7 +29,6 @@ jobs:
         sudo apt-get install -y fuse
         mkdir -p AppImageDir/usr/bin
         cp target/x86_64-unknown-linux-gnu/debug/tiffiny AppImageDir/usr/bin/
-        cp tiffiny/icon.png AppImageDir/tiffiny.png
         cat > AppImageDir/tiffiny.desktop << 'EOF'
         [Desktop Entry]
         Type=Application
