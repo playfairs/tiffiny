@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
     - uses: actions/checkout@v4
+    - name: Install Rust target
+      run: rustup target add aarch64-unknown-linux-gnu
     - name: Build
       run: cargo build --verbose --target aarch64-unknown-linux-gnu
     - name: Run tests
@@ -32,6 +34,10 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Install Rust targets
+      run: |
+        rustup target add x86_64-pc-windows-msvc
+        rustup target add aarch64-pc-windows-msvc
     - name: Build (Windows x86_64)
       run: cargo build --verbose --target x86_64-pc-windows-msvc
     - name: Build (Windows aarch64)
