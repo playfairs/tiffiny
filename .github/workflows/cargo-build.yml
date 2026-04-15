@@ -86,3 +86,5 @@ jobs:
           artifacts/tiffiny-linux-aarch64/tiffiny
           artifacts/tiffiny-windows-x86_64/tiffiny.exe
           artifacts/tiffiny-windows-aarch64/tiffiny.exe
+        tag_name: ${{ github.ref_name }}
+        name: ${{ github.event.release.name || github.ref_name }}
