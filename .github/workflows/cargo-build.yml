@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  release:
+    types: [ "published" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -18,6 +20,11 @@ jobs:
       run: cargo build --verbose --target x86_64-unknown-linux-gnu
     - name: Run tests
       run: cargo test --verbose
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tiffiny-linux-x86_64
+        path: target/x86_64-unknown-linux-gnu/debug/tiffiny
 
   build-linux-arm:
     runs-on: ubuntu-24.04-arm
@@ -29,6 +36,11 @@ jobs:
       run: cargo build --verbose --target aarch64-unknown-linux-gnu
     - name: Run tests
       run: cargo test --verbose
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tiffiny-linux-aarch64
+        path: target/aarch64-unknown-linux-gnu/debug/tiffiny
 
   build-windows:
     runs-on: windows-latest
@@ -40,7 +52,35 @@ jobs:
         rustup target add aarch64-pc-windows-msvc
     - name: Build (Windows x86_64)
       run: cargo build --verbose --target x86_64-pc-windows-msvc
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tiffiny-windows-x86_64
+        path: target/x86_64-pc-windows-msvc/debug/tiffiny.exe
     - name: Build (Windows aarch64)
       run: cargo build --verbose --target aarch64-pc-windows-msvc
     - name: Run tests
       run: cargo test --verbose
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tiffiny-windows-aarch64
+        path: target/aarch64-pc-windows-msvc/debug/tiffiny.exe
+
+  release:
+    if: github.event_name == 'release'
+    needs: [build-linux, build-linux-arm, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    - name: Upload release assets
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          artifacts/tiffiny-linux-x86_64/tiffiny
+          artifacts/tiffiny-linux-aarch64/tiffiny
+          artifacts/tiffiny-windows-x86_64/tiffiny.exe
+          artifacts/tiffiny-windows-aarch64/tiffiny.exe
