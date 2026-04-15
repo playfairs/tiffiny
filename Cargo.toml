@@ -1,13 +1,21 @@
-[package]
-name = "tiffiny"
+[workspace]
+resolver = "3"
+members = [
+    "crates/core",
+    "crates/image", 
+    "crates/cli"
+]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
 description = "Convert Audio files into Images using TIFF Headers and RAW Data Manipulation."
 
-[dependencies]
+[workspace.dependencies]
 clap = { version = "4.5", features = ["derive"] }
 image = "0.25"
 indicatif = "0.17"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 dirs = "5.0"
+
