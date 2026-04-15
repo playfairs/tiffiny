@@ -1,5 +1,8 @@
 name: Cargo-Build
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ "master" ]
