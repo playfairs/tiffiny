@@ -35,7 +35,6 @@ jobs:
         Name=Tiffiny
         Comment=Audio to Image Converter
         Exec=tiffiny
-        Icon=tiffiny
         Categories=AudioVideo;Audio;
         EOF
         wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
