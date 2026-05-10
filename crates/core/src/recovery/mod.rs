@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use std::collections::HashMap;
 use parking_lot::RwLock;
+use serde::{Serialize, Deserialize};
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

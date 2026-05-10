@@ -6478,8 +6478,12 @@ name = "tiffiny-core"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "dirs",
+ "flate2",
+ "memmap2 0.9.10",
  "num-derive",
  "num-traits",
+ "num_cpus",
  "parking_lot",
  "serde",
  "serde_json",
