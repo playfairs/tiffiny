@@ -285,6 +285,9 @@ impl CacheManager {
         }
 
         drop(entries);
+        
+        let max_size_bytes = policy.max_size_bytes;
+        let max_entries = policy.max_entries;
         drop(policy);
 
         let mut evicted_count = 0;
@@ -292,7 +295,7 @@ impl CacheManager {
         let mut current_count = current_count;
 
         for entry in entries_to_evict {
-            if current_size <= policy.max_size_bytes && current_count <= policy.max_entries {
+            if current_size <= max_size_bytes && current_count <= max_entries {
                 break;
             }
 
@@ -389,8 +392,8 @@ impl CacheManager {
         let stats = self.stats.read();
         
         let cache_info = serde_json::json!({
-            "stats": stats,
-            "entries": entries.values().collect::<Vec<_>>(),
+            "stats": *stats,
+            "entries": entries.values().cloned().collect::<Vec<_>>(),
             "exported_at": std::time::SystemTime::now()
         });
 

@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use std::collections::HashMap;
-use parking_lot::RwLock;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -13,7 +12,7 @@ pub struct Pipeline {
     pub settings: PipelineSettings,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum PipelineStatus {
     Pending,
     Running,
@@ -47,7 +46,7 @@ pub struct PipelineSettings {
     pub error_handling: ErrorHandlingStrategy,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ErrorHandlingStrategy {
     StopOnError,
     ContinueOnError,

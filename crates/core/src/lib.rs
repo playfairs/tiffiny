@@ -67,6 +67,8 @@ impl From<serde_json::Error> for CoreError {
     }
 }
 
+pub type Result<T> = std::result::Result<T, CoreError>;
+
 pub mod prelude {
     pub use super::{CoreError, Result};
     pub use uuid::Uuid;

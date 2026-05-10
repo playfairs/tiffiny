@@ -348,13 +348,13 @@ impl GraphManager {
             }
 
             let start_time = std::time::Instant::now();
-            let result = Self::execute_node(&graph, &node_id).await;
+            let result: Result<serde_json::Value> = Self::execute_node(&graph, &node_id).await;
             let execution_time = start_time.elapsed().as_millis() as u64;
 
             let graph_result = GraphResult {
                 success: result.is_ok(),
                 data: result.ok(),
-                error: result.err().map(|e| e.to_string()),
+                error: result.as_ref().err().map(|e| e.to_string()),
                 execution_time_ms: execution_time,
             };
 

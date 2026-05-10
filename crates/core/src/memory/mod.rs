@@ -186,7 +186,7 @@ impl MemoryManager {
                 .ok_or_else(|| CoreError::Memory(format!("Allocation {} not found", allocation_id)))?
         };
 
-        self.free_allocation_blocks(&allocation_id)?;
+        self.free_allocation_blocks(allocation_id)?;
 
         {
             let mut pools = self.pools.write();
@@ -410,7 +410,7 @@ impl MemoryManager {
         coalesced.push(current);
 
         for block in &coalesced {
-            blocks.insert(block.id, block.clone());
+            blocks.insert(block.id, (*block).clone());
         }
 
         Ok(())

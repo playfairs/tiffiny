@@ -127,7 +127,7 @@ impl BufferManager {
 
         let buffer_id = Uuid::new_v4();
         let file_buffer = FileBuffer {
-            path: file_path,
+            path: file_path.clone(),
             mmap,
             size: file_size,
         };
@@ -185,7 +185,7 @@ impl BufferManager {
 
             let start = handle.offset as usize;
             let end = start + data.len();
-            file_buffer.mmap[start..end].copy_from_slice(data);
+            file_buffer.mmap.make_mut()[start..end].copy_from_slice(data);
             Ok(())
         } else {
             Err(CoreError::Memory("Buffer not found".to_string()))

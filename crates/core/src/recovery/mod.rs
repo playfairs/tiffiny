@@ -331,9 +331,10 @@ impl RecoveryManager {
     }
 
     fn load_existing_recovery_points(&self) -> Result<()> {
-        let config = self.config.read();
-        let recovery_dir = &config.recovery_directory;
-        drop(config);
+        let recovery_dir = {
+            let config = self.config.read();
+            config.recovery_directory.clone()
+        };
 
         if !recovery_dir.exists() {
             return Ok(());
@@ -384,18 +385,19 @@ impl RecoveryManager {
         let max_points = config.max_recovery_points;
         drop(config);
 
-        let recovery_points = self.recovery_points.read();
-        if recovery_points.len() <= max_points {
-            return Ok(());
-        }
-        
-        let mut points: Vec<_> = recovery_points.values().collect();
-        points.sort_by(|a, b| a.created_at.cmp(&b.created_at));
+        let points: Vec<_> = {
+            let recovery_points = self.recovery_points.read();
+            if recovery_points.len() <= max_points {
+                return Ok(());
+            }
+            
+            let mut points: Vec<_> = recovery_points.values().cloned().collect();
+            points.sort_by(|a, b| a.created_at.cmp(&b.created_at));
+            points
+        };
         
         let points_to_remove = points.len() - max_points;
         let points_to_remove = &points[..points_to_remove];
-        
-        drop(recovery_points);
         
         for recovery_point in points_to_remove {
             self.delete_recovery_point(recovery_point.id)?;

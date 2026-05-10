@@ -16,6 +16,10 @@
           cargo
           rustfmt
           clippy
+          pkg-config
+          openssl
+          ffmpeg
+          opencv
         ];
       };
     });
@@ -32,6 +36,16 @@
         cargoLock = {
           lockFile = ./Cargo.lock;
         };
+
+        nativeBuildInputs = with pkgs; [
+          pkg-config
+        ];
+
+        buildInputs = with pkgs; [
+          openssl
+          ffmpeg
+          opencv
+        ];
       };
       default = tiffiny;
     });
