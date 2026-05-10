@@ -413,7 +413,7 @@ impl MemoryManager {
         coalesced.push(current);
 
         for block in coalesced.iter() {
-            blocks.insert(block.id, block.clone());
+            blocks.insert(block.id, (*block).clone());
         }
 
         Ok(())

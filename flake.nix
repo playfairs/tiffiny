@@ -20,6 +20,7 @@
           openssl
           ffmpeg
           opencv
+          libclang
         ];
       };
     });
@@ -45,6 +46,7 @@
           openssl
           ffmpeg
           opencv
+          libclang
         ];
       };
       default = tiffiny;
