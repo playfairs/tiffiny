@@ -51,7 +51,7 @@ sysinfo = "0.30"
 num_cpus = "1.16"
 
 path-absolutize = "3.1"
-normalize-path = "3.1"
+normalize-path = "0.1"
 
 unicode-normalization = "0.1"
 slug = "0.1"

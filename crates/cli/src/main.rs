@@ -10,7 +10,7 @@ mod config;
 use commands::*;
 
 #[derive(Parser)]
-#[command(name = "tiffiny")]
+#[command(name = "tiffiny-cli")]
 #[command(about = "Tiffiny Studio - Media Databending and Processing Tool")]
 #[command(version = env!("CARGO_PKG_VERSION"))]
 #[command(author = "Tiffiny Studio Team")]

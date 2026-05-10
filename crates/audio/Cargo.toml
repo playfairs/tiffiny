@@ -8,7 +8,7 @@ license = "MIT"
 
 [dependencies]
 symphonia = { version = "0.5", features = ["all"] }
-rodio = { version = "0.17", features = ["wav", "mp3", "flac", "ogg"] }
+rodio = { version = "0.19", features = ["wav", "vorbis", "flac"] }
 
 rustfft = "6.1"
 dasp = "0.11"

@@ -17,7 +17,7 @@ tokio = { version = "1.0", features = ["full"] }
 thiserror = "1.0"
 anyhow = "1.0"
 
-tracing = "1.0"
+tracing = "0.1"
 
 parking_lot = "0.12"
 uuid = { version = "1.0", features = ["v4"] }
