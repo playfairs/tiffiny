@@ -1,0 +1,29 @@
+[package]
+name = "tiffiny-audio"
+version = "0.1.0"
+edition = "2021"
+description = "Audio processing and playback for Tiffiny Studio"
+authors = ["Tiffiny Studio Development Team"]
+license = "MIT"
+
+[dependencies]
+symphonia = { version = "0.5", features = ["all"] }
+rodio = { version = "0.17", features = ["wav", "mp3", "flac", "ogg"] }
+
+rustfft = "6.1"
+dasp = "0.11"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+tokio = { version = "1.0", features = ["full"] }
+
+thiserror = "1.0"
+anyhow = "1.0"
+
+tracing = "0.1"
+
+parking_lot = "0.12"
+uuid = { version = "1.0", features = ["v4"] }
+
+tiffiny-core = { path = "../core" }

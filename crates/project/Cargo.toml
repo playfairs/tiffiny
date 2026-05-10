@@ -1,0 +1,55 @@
+[package]
+name = "tiffiny-project"
+version = "0.1.0"
+edition = "2021"
+description = "Project save/load functionality for Tiffiny Studio"
+authors = ["Tiffiny Studio Development Team"]
+license = "MIT"
+
+[dependencies]
+tiffiny-core = { path = "../core" }
+tiffiny-audio = { path = "../audio" }
+tiffiny-image = { path = "../image" }
+tiffiny-video = { path = "../video" }
+tiffiny-raw = { path = "../raw" }
+tiffiny-convert = { path = "../convert" }
+tiffiny-effects = { path = "../effects" }
+tiffiny-gpu = { path = "../gpu" }
+
+tokio = { version = "1.0", features = ["full"] }
+
+thiserror = "1.0"
+anyhow = "1.0"
+
+tracing = "1.0"
+
+parking_lot = "0.12"
+uuid = { version = "1.0", features = ["v4"] }
+num-traits = "0.2"
+num-derive = "0.4"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bincode = "1.3"
+toml = "0.8"
+
+walkdir = "2.3"
+glob = "0.3"
+
+flate2 = "1.0"
+zip = "0.6"
+
+sha2 = "0.10"
+md5 = "0.7"
+
+chrono = { version = "0.4", features = ["serde"] }
+
+dirs = "5.0"
+
+config = "0.13"
+
+indicatif = "0.17"
+
+git2 = "0.18"
+
+rusqlite = { version = "0.31", features = ["bundled"] }

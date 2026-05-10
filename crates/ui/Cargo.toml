@@ -1,0 +1,25 @@
+[package]
+name = "tiffiny-ui"
+version.workspace = true
+edition.workspace = true
+description = "User interface components for Tiffiny Studio"
+
+[dependencies]
+egui = { workspace = true }
+eframe = { workspace = true }
+wgpu = { workspace = true }
+winit = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+parking_lot = { workspace = true }
+crossbeam = { workspace = true }
+nalgebra = { workspace = true }
+glam = { workspace = true }
+
+tiffiny-core = { workspace = true }
+tiffiny-utils = { workspace = true }

@@ -1,75 +1,88 @@
-use clap::Parser;
-use std::fs;
-use cli::cli;
-use core::{Config, utils};
-use image_proc::ImageGenerator;
+use clap::{Parser, Subcommand};
+use anyhow::Result;
+use std::path::PathBuf;
+use tracing::error;
 
-fn main() -> Result<(), ()> {
-    let cli_args = cli::Cli::parse();
+mod commands;
+mod utils;
+mod config;
 
-    match cli_args.command {
-        cli::Commands::Convert { input, output, width, height, encoding, channels, color_scheme, scaling } => {
-            let clean_input = utils::normalize(&utils::strip_quotes(&input));
-            let config = Config::load();
-            
-            let clean_output = match output {
-                Some(out) => utils::normalize(&utils::strip_quotes(&out)),
-                None => {
-                    let input_path = std::path::Path::new(&clean_input);
-                    let stem = input_path.file_stem().unwrap_or_default().to_str().unwrap_or("output");
-                    let filename = format!("{}.png", stem);
-                    
-                    if let Some(output_dir) = config.get_output_directory() {
-                        let output_path = std::path::Path::new(output_dir).join(filename);
-                        output_path.to_string_lossy().to_string()
-                    } else {
-                        filename
-                    }
-                }
-            };
-            ImageGenerator::audio_to_image(&clean_input, &clean_output, width, height, &encoding, channels, &color_scheme, &scaling)?;
-            let absolute_path = std::fs::canonicalize(&clean_output).unwrap_or_else(|_| clean_output.clone().into());
-            println!("Image written to {}", absolute_path.display());
-        }
+use commands::*;
 
-        cli::Commands::Inspect { input } => {
-            let clean_input = utils::normalize(&utils::strip_quotes(&input));
-            let metadata = fs::metadata(&clean_input).unwrap();
-            let data = fs::read(&clean_input).unwrap();
+#[derive(Parser)]
+#[command(name = "tiffiny")]
+#[command(about = "Tiffiny Studio - Media Databending and Processing Tool")]
+#[command(version = env!("CARGO_PKG_VERSION"))]
+#[command(author = "Tiffiny Studio Team")]
+pub struct Cli {
+    /Enable verbose output
+    #[arg(short, long)]
+    pub verbose: bool,
 
-            println!("tiffiny::inspect");
-            println!("  file: {}", clean_input);
-            println!("  size: {} bytes", metadata.len());
+    #[arg(short, long, default_value = "~/.config/tiffiny/config.toml")]
+    pub config: PathBuf,
 
-            let entropy = utils::calculate_entropy(&data);
-            println!("  entropy: {:.4}", entropy);
-            println!("  preview (first 16 bytes):");
+    #[arg(short, long, default_value = ".")]
+    pub work_dir: PathBuf,
 
-            for byte in data.iter().take(16) {
-                print!("{:02X} ", byte);
-            }
-            println!();
-        }
+    #[command(subcommand)]
+    pub command: Commands,
+}
 
-        cli::Commands::PathSet { path } => {
-            let mut config = Config::load();
-            let clean_path = utils::normalize(&utils::strip_quotes(&path));
-            
-            if let Err(e) = std::fs::create_dir_all(&clean_path) {
-                eprintln!("Error creating directory: {}", e);
-                return Err(());
-            }
-            
-            config.set_output_directory(&clean_path);
-            if let Err(e) = config.save() {
-                eprintln!("Error saving config: {}", e);
-                return Err(());
-            }
-            
-            let absolute_path = std::fs::canonicalize(&clean_path).unwrap_or_else(|_| clean_path.clone().into());
-            println!("Output directory set to: {}", absolute_path.display());
-        }
+#[derive(Subcommand)]
+pub enum Commands {
+    Project {
+        #[command(subcommand)]
+        command: ProjectCommands,
+    },
+    Process {
+        #[command(subcommand)]
+        command: ProcessCommands,
+    },
+    Effects {
+        #[command(subcommand)]
+        command: EffectsCommands,
+    },
+    Convert {
+        #[command(subcommand)]
+        command: ConvertCommands,
+    },
+    Gpu {
+        #[command(subcommand)]
+        command: GpuCommands,
+    },
+    Config {
+        #[command(subcommand)]
+        command: ConfigCommands,
+    },
+    Utils {
+        #[command(subcommand)]
+        command: UtilsCommands,
+    },
+    Interactive {
+        #[arg(short, long)]
+        project: Option<String>,
+    },
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let cli = Cli::parse();
+
+    utils::init_logging(cli.verbose);
+
+    let config = config::load_config(&cli.config).await?;
+
+    std::env::set_current_dir(&cli.work_dir)?;
+
+    match cli.command {
+        Commands::Project { command } => project::handle(command, &config).await,
+        Commands::Process { command } => process::handle(command, &config).await,
+        Commands::Effects { command } => effects::handle(command, &config).await,
+        Commands::Convert { command } => convert::handle(command, &config).await,
+        Commands::Gpu { command } => gpu::handle(command, &config).await,
+        Commands::Config { command } => config::handle(command, &config).await,
+        Commands::Utils { command } => utils::handle(command, &config).await,
+        Commands::Interactive { project } => interactive::handle(project, &config).await,
     }
-
-    Ok(())
 }

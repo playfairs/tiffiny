@@ -1,0 +1,32 @@
+[package]
+name = "tiffiny-app"
+version.workspace = true
+edition.workspace = true
+description = "Main application entry point for Tiffiny Studio"
+
+[[bin]]
+name = "tiffiny"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+parking_lot = { workspace = true }
+
+tiffiny-core = { workspace = true }
+tiffiny-ui = { workspace = true }
+tiffiny-audio = { workspace = true }
+tiffiny-image = { workspace = true }
+tiffiny-video = { workspace = true }
+tiffiny-raw = { workspace = true }
+tiffiny-convert = { workspace = true }
+tiffiny-effects = { workspace = true }
+tiffiny-gpu = { workspace = true }
+tiffiny-project = { workspace = true }
+tiffiny-utils = { workspace = true }

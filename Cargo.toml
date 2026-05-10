@@ -1,21 +1,85 @@
 [workspace]
 resolver = "3"
 members = [
+    "crates/app",
+    "crates/ui",
     "crates/core",
-    "crates/image-proc", 
-    "crates/cli"
+    "crates/audio",
+    "crates/image",
+    "crates/video",
+    "crates/raw",
+    "crates/convert",
+    "crates/effects",
+    "crates/gpu",
+    "crates/project",
+    "crates/cli",
+    "crates/utils"
 ]
 
 [workspace.package]
 version = "0.1.0"
-edition = "2024"
-description = "Convert Audio files into Images using TIFF Headers and RAW Data Manipulation."
+edition = "2021"
+description = "Professional multimedia databending and media reinterpretation studio"
+authors = ["Tiffiny Studio"]
+license = "MIT"
 
 [workspace.dependencies]
-clap = { version = "4.5", features = ["derive"] }
-image = "0.25"
-indicatif = "0.17"
+egui = "0.28"
+eframe = { version = "0.28", features = ["default_fonts", "glow"] }
+wgpu = "0.20"
+winit = "0.29"
+
+symphonia = { version = "0.5", features = ["all", "opt-simd"] }
+rodio = { version = "0.19", features = ["wav", "vorbis", "flac", "mp3"] }
+cpal = "0.15"
+rustfft = "6.2"
+
+ffmpeg-next = "7.0"
+
+image = { version = "0.25", features = ["tiff", "png", "jpeg", "webp", "avif"] }
+
+tokio = { version = "1.0", features = ["full"] }
+tokio-util = "0.7"
+
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+ron = "0.8"
+
+thiserror = "1.0"
+anyhow = "1.0"
+
+clap = { version = "4.5", features = ["derive"] }
 dirs = "5.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+crossbeam = "0.8"
+parking_lot = "0.12"
+num_cpus = "1.16"
+memmap2 = "0.9"
+byteorder = "1.5"
+
+nalgebra = "0.33"
+glam = "0.28"
+
+notify = "6.1"
+walkdir = "2.5"
+
+pollster = "0.3"
+
+indicatif = "0.17"
+crossterm = "0.27"
+
+tiffiny-core = { path = "crates/core" }
+tiffiny-ui = { path = "crates/ui" }
+tiffiny-audio = { path = "crates/audio" }
+tiffiny-image = { path = "crates/image" }
+tiffiny-video = { path = "crates/video" }
+tiffiny-raw = { path = "crates/raw" }
+tiffiny-convert = { path = "crates/convert" }
+tiffiny-effects = { path = "crates/effects" }
+tiffiny-gpu = { path = "crates/gpu" }
+tiffiny-project = { path = "crates/project" }
+tiffiny-cli = { path = "crates/cli" }
+tiffiny-utils = { path = "crates/utils" }
 
