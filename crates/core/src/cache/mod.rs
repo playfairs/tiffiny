@@ -151,7 +151,7 @@ impl CacheManager {
             
             {
                 let mut entries = self.entries.write();
-                if let Some(mut entry_ref) = entries.get_mut(key) {
+                if let Some(entry_ref) = entries.get_mut(key) {
                     entry_ref.last_accessed = now;
                     entry_ref.access_count += 1;
                 }
@@ -290,7 +290,7 @@ impl CacheManager {
         let max_entries = policy.max_entries;
         drop(policy);
 
-        let mut evicted_count = 0;
+        let mut _evicted_count = 0;
         let mut current_size = current_size;
         let mut current_count = current_count;
 
@@ -302,7 +302,7 @@ impl CacheManager {
             if self.remove(&entry.key)? {
                 current_size -= entry.size_bytes;
                 current_count -= 1;
-                evicted_count += 1;
+                _evicted_count += 1;
 
                 {
                     let mut stats = self.stats.write();

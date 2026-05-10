@@ -353,7 +353,7 @@ impl GraphManager {
 
             let graph_result = GraphResult {
                 success: result.is_ok(),
-                data: result.ok(),
+                data: result.clone().ok(),
                 error: result.as_ref().err().map(|e| e.to_string()),
                 execution_time_ms: execution_time,
             };

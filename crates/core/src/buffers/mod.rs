@@ -128,7 +128,7 @@ impl BufferManager {
         let buffer_id = Uuid::new_v4();
         let file_buffer = FileBuffer {
             path: file_path.clone(),
-            mmap,
+            mmap: unsafe { MmapOptions::new().map(&file)? },
             size: file_size,
         };
 
@@ -185,7 +185,11 @@ impl BufferManager {
 
             let start = handle.offset as usize;
             let end = start + data.len();
-            file_buffer.mmap.make_mut()[start..end].copy_from_slice(data);
+            
+            unsafe {
+                let mmap_slice = std::slice::from_raw_parts_mut(file_buffer.mmap.as_ptr() as *mut u8, file_buffer.mmap.len());
+                mmap_slice[start..end].copy_from_slice(data);
+            }
             Ok(())
         } else {
             Err(CoreError::Memory("Buffer not found".to_string()))

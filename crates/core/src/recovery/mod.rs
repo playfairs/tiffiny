@@ -202,11 +202,11 @@ impl RecoveryManager {
         recovery_points.get(&recovery_id).cloned()
     }
 
-    pub fn get_recovery_points_by_type(&self, recovery_type: RecoveryType) -> Vec<RecoveryPoint> {
+    pub fn get_recovery_points_by_type(&self, _recovery_type: RecoveryType) -> Vec<RecoveryPoint> {
         let recovery_points = self.recovery_points.read();
         recovery_points
             .values()
-            .filter(|rp| matches!(&rp.recovery_type, recovery_type))
+            .filter(|rp| matches!(&rp.recovery_type, _recovery_type))
             .cloned()
             .collect()
     }
@@ -320,11 +320,14 @@ impl RecoveryManager {
 
         let recovery_data = serde_json::to_vec(recovery_point)?;
         
-        if config.read().compression_enabled {
-            let compressed_data = Self::compress_data(&recovery_data)?;
-            std::fs::write(file_path.with_extension("recovery.gz"), compressed_data)?;
-        } else {
-            std::fs::write(file_path, recovery_data)?;
+        {
+            let config = self.config.read();
+            if config.compression_enabled {
+                let compressed_data = Self::compress_data(&recovery_data)?;
+                std::fs::write(file_path.with_extension("recovery.gz"), compressed_data)?;
+            } else {
+                std::fs::write(file_path, recovery_data)?;
+            }
         }
 
         Ok(())
@@ -457,7 +460,7 @@ impl RecoveryManager {
     }
 
     async fn perform_auto_save(
-        recovery_points: &Arc<RwLock<HashMap<Uuid, RecoveryPoint>>>,
+        _recovery_points: &Arc<RwLock<HashMap<Uuid, RecoveryPoint>>>,
         stats: &Arc<RwLock<RecoveryStats>>,
     ) -> Result<()> {
         tracing::debug!("Performing auto-save");

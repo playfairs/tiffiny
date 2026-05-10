@@ -27,6 +27,7 @@ pub enum CoreError {
     Recovery(String),
     Session(String),
     Io(String),
+    Project(String),
 }
 
 impl std::fmt::Display for CoreError {
@@ -37,6 +38,7 @@ impl std::fmt::Display for CoreError {
             CoreError::Recovery(msg) => write!(f, "Recovery: {}", msg),
             CoreError::Session(msg) => write!(f, "Session: {}", msg),
             CoreError::Io(msg) => write!(f, "IO: {}", msg),
+            CoreError::Project(msg) => write!(f, "Project: {}", msg),
         }
     }
 }

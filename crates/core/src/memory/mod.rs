@@ -196,8 +196,11 @@ impl MemoryManager {
         }
 
         {
-            let allocations = self.allocations.read();
-            allocations.remove(&allocation_id);
+            let _allocations = self.allocations.read();
+            {
+                let mut allocations = self.allocations.write();
+                allocations.remove(&allocation_id);
+            }
         }
 
         {
@@ -409,8 +412,8 @@ impl MemoryManager {
 
         coalesced.push(current);
 
-        for block in &coalesced {
-            blocks.insert(block.id, (*block).clone());
+        for block in coalesced.iter() {
+            blocks.insert(block.id, block.clone());
         }
 
         Ok(())
@@ -423,7 +426,7 @@ impl MemoryManager {
 
         let total_memory: u64 = pools.values().map(|p| p.total_size_bytes).sum();
         let allocated_memory: u64 = pools.values().map(|p| p.allocated_bytes).sum();
-        let free_blocks = blocks.values().filter(|b| !b.is_allocated).count();
+        let _free_blocks = blocks.values().filter(|b| !b.is_allocated).count();
 
         let mut stats = self.stats.write();
         stats.total_pools = pools.len();
