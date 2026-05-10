@@ -384,19 +384,19 @@ impl RecoveryManager {
         let max_points = config.max_recovery_points;
         drop(config);
 
-        let mut recovery_points = self.recovery_points.read();
+        let recovery_points = self.recovery_points.read();
         if recovery_points.len() <= max_points {
             return Ok(());
         }
-
+        
         let mut points: Vec<_> = recovery_points.values().collect();
         points.sort_by(|a, b| a.created_at.cmp(&b.created_at));
-
+        
         let points_to_remove = points.len() - max_points;
         let points_to_remove = &points[..points_to_remove];
-
+        
         drop(recovery_points);
-
+        
         for recovery_point in points_to_remove {
             self.delete_recovery_point(recovery_point.id)?;
         }

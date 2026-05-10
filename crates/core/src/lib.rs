@@ -3,6 +3,7 @@ pub mod cache;
 pub mod graph;
 pub mod jobs;
 pub mod memory;
+pub mod pipeline;
 pub mod project;
 pub mod recovery;
 pub mod session;
@@ -18,47 +19,6 @@ pub use recovery::*;
 pub use session::*;
 pub use task::*;
 
-use std::sync::Arc;
-use parking_lot::RwLock;
-
-#[derive(Debug, Clone)]
-pub struct CoreError {
-    pub message: String,
-}
-
-impl std::fmt::Display for CoreError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.message)
-    }
-}
-
-impl std::error::Error for CoreError {}
-
-pub type Result<T> = std::result::Result<T, CoreError>;
-
-impl From<String> for CoreError {
-    fn from(message: String) -> Self {
-        CoreError { message }
-    }
-}
-
-impl From<&str> for CoreError {
-    fn from(message: &str) -> Self {
-        CoreError { message: message.to_string() }
-    }
-}
-
-impl From<std::io::Error> for CoreError {
-    fn from(err: std::io::Error) -> Self {
-        CoreError { message: err.to_string() }
-    }
-}
-
-impl From<serde_json::Error> for CoreError {
-    fn from(err: serde_json::Error) -> Self {
-        CoreError { message: err.to_string() }
-    }
-}
 
 #[derive(Debug, Clone)]
 pub enum CoreError {
