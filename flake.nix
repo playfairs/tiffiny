@@ -1,21 +1,28 @@
 {
-  description = "tiffiny - Convert Audio files into Images using TIFF Headers and RAW Data Manipulation.";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-  outputs = { nixpkgs, ... }:
+  description = "";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  outputs = { ... }@inputs:
   let
+    inherit (inputs)fenix nixpkgs;
     forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
   in
   {
     devShells = forAllSystems (system: let
       pkgs = import nixpkgs { inherit system; };
+      toolchain = with fenix.packages.${pkgs.stdenv.system}; combine [
+        latest.toolchain
+        targets.wasm32-unknown-unknown.latest.rust-std
+      ];
     in {
       default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          rustc
-          cargo
-          rustfmt
-          clippy
+          toolchain
           pkg-config
           openssl
           ffmpeg
@@ -24,7 +31,6 @@
         ];
       };
     });
-
     packages = forAllSystems (system: let
       pkgs = import nixpkgs { inherit system; };
     in rec {
