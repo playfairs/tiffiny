@@ -7,7 +7,15 @@ authors = ["Tiffiny Studio Development Team"]
 license = "MIT"
 
 [dependencies]
-image = { version = "0.24", features = ["png", "jpeg", "gif", "bmp", "tiff", "webp", "ico"] }
+image = { version = "0.24", features = [
+  "png",
+  "jpeg",
+  "gif",
+  "bmp",
+  "tiff",
+  "webp",
+  "ico",
+] }
 imageproc = "0.23"
 
 fast_image_resize = "4.0"

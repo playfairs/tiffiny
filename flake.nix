@@ -15,65 +15,76 @@
     };
   };
 
-  outputs = { ... }@inputs:
-  let
-    inherit (inputs) fenix nixpkgs;
+  outputs =
+    { ... }@inputs:
+    let
+      inherit (inputs) fenix nixpkgs;
 
-    forAllSystems =
-      nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
-  in {
-    formatter = forAllSystems (system:
-      import ./nix/formatter.nix {
-        inherit inputs;
-        pkgs = import nixpkgs { inherit system; };
-      });
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
+    in
+    {
+      formatter = forAllSystems (
+        system:
+        import ./nix/formatter.nix {
+          inherit inputs;
+          pkgs = import nixpkgs { inherit system; };
+        }
+      );
 
-    devShells = forAllSystems (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
 
-        toolchain = with fenix.packages.${pkgs.stdenv.system}; combine [
-          latest.toolchain
-          targets.wasm32-unknown-unknown.latest.rust-std
-        ];
-      in {
-        default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            toolchain
-            pkg-config
-            openssl
-            ffmpeg
-            opencv
-            libclang
-          ];
-        };
-      });
+          toolchain =
+            with fenix.packages.${pkgs.stdenv.system};
+            combine [
+              latest.toolchain
+              targets.wasm32-unknown-unknown.latest.rust-std
+            ];
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              toolchain
+              pkg-config
+              openssl
+              ffmpeg
+              opencv
+              libclang
+            ];
+          };
+        }
+      );
 
-    packages = forAllSystems (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in rec {
-        tiffiny = pkgs.rustPlatform.buildRustPackage {
-          pname = "tiffiny";
-          version = "0.1.0";
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        rec {
+          tiffiny = pkgs.rustPlatform.buildRustPackage {
+            pname = "tiffiny";
+            version = "0.1.0";
 
-          src = ./.;
+            src = ./.;
 
-          cargoLock.lockFile = ./Cargo.lock;
+            cargoLock.lockFile = ./Cargo.lock;
 
-          nativeBuildInputs = with pkgs; [
-            pkg-config
-          ];
+            nativeBuildInputs = with pkgs; [
+              pkg-config
+            ];
 
-          buildInputs = with pkgs; [
-            openssl
-            ffmpeg
-            opencv
-            libclang
-          ];
-        };
+            buildInputs = with pkgs; [
+              openssl
+              ffmpeg
+              opencv
+              libclang
+            ];
+          };
 
-        default = tiffiny;
-      });
-  };
+          default = tiffiny;
+        }
+      );
+    };
 }

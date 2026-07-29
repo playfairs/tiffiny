@@ -1,19 +1,19 @@
 [workspace]
 resolver = "3"
 members = [
-    "crates/app",
-    "crates/ui",
-    "crates/core",
-    "crates/audio",
-    "crates/image",
-    "crates/video",
-    "crates/raw",
-    "crates/convert",
-    "crates/effects",
-    "crates/gpu",
-    "crates/project",
-    "crates/cli",
-    "crates/utils"
+  "crates/app",
+  "crates/ui",
+  "crates/core",
+  "crates/audio",
+  "crates/image",
+  "crates/video",
+  "crates/raw",
+  "crates/convert",
+  "crates/effects",
+  "crates/gpu",
+  "crates/project",
+  "crates/cli",
+  "crates/utils",
 ]
 
 [workspace.package]
@@ -82,4 +82,3 @@ tiffiny-gpu = { path = "crates/gpu" }
 tiffiny-project = { path = "crates/project" }
 tiffiny-cli = { path = "crates/cli" }
 tiffiny-utils = { path = "crates/utils" }
-
