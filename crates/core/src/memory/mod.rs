@@ -390,6 +390,7 @@ impl MemoryManager {
     let mut pool_blocks: Vec<_> = blocks
       .values_mut()
       .filter(|b| b.pool_id == pool.id)
+      .map(|block| (*block).clone())
       .collect();
 
     pool_blocks.sort_by_key(|b| b.offset);

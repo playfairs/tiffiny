@@ -2,10 +2,11 @@
 name = "tiffiny-utils"
 version = "0.1.0"
 edition = "2021"
-authors = ["Tiffiny Studio Team"]
+authors = ["playfairs"]
 description = "Common utilities for Tiffiny Studio"
-license = "MIT"
-repository = "https://github.com/tiffiny-studio/tiffiny"
+license = "GPL-3.0"
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 keywords = ["utilities", "helpers", "common"]
 categories = ["development-tools"]
 

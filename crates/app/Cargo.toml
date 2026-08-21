@@ -2,6 +2,10 @@
 name = "tiffiny-app"
 version.workspace = true
 edition.workspace = true
+license = "GPL-3.0"
+authors = ["playfairs"]
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 description = "Main application entry point for Tiffiny Studio"
 
 [[bin]]

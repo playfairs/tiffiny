@@ -2,9 +2,11 @@
 name = "tiffiny-image"
 version = "0.1.0"
 edition = "2021"
+license = "GPL-3.0"
+authors = ["playfairs"]
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 description = "Image processing and manipulation for Tiffiny Studio"
-authors = ["Tiffiny Studio Development Team"]
-license = "MIT"
 
 [dependencies]
 image = { version = "0.24", features = [
@@ -32,7 +34,7 @@ anyhow = "1.0"
 tracing = "0.1"
 
 parking_lot = "0.12"
-uuid = { version = "1.0", features = ["v4"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
 num-complex = "0.4"
 
 tiffiny-core = { path = "../core" }

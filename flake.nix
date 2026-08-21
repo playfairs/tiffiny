@@ -45,13 +45,18 @@
         in
         {
           default = pkgs.mkShell {
+            LIBCLANG_PATH = "${pkgs.llvmPackages_18.libclang.lib}/lib";
+            CC = "${pkgs.llvmPackages_18.clang}/bin/clang";
+            CXX = "${pkgs.llvmPackages_18.clang}/bin/clang++";
+
             buildInputs = with pkgs; [
               toolchain
               pkg-config
               openssl
-              ffmpeg
+              ffmpeg_7
               opencv
-              libclang
+              llvmPackages_18.libclang
+              llvmPackages_18.clang
             ];
           };
         }
@@ -67,6 +72,10 @@
             pname = "tiffiny";
             version = "0.1.0";
 
+            LIBCLANG_PATH = "${pkgs.llvmPackages_18.libclang.lib}/lib";
+            CC = "${pkgs.llvmPackages_18.clang}/bin/clang";
+            CXX = "${pkgs.llvmPackages_18.clang}/bin/clang++";
+
             src = ./.;
 
             cargoLock.lockFile = ./Cargo.lock;
@@ -77,9 +86,10 @@
 
             buildInputs = with pkgs; [
               openssl
-              ffmpeg
+              ffmpeg_7
               opencv
-              libclang
+              llvmPackages_18.libclang
+              llvmPackages_18.clang
             ];
           };
 

@@ -20,8 +20,10 @@ members = [
 version = "0.1.0"
 edition = "2021"
 description = "Professional multimedia databending and media reinterpretation studio"
-authors = ["Tiffiny Studio"]
-license = "MIT"
+authors = ["playfairs"]
+license = "GPL-3.0"
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 
 [workspace.dependencies]
 egui = "0.28"

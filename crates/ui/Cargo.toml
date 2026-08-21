@@ -2,6 +2,10 @@
 name = "tiffiny-ui"
 version.workspace = true
 edition.workspace = true
+license = "GPL-3.0"
+authors = ["playfairs"]
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 description = "User interface components for Tiffiny Studio"
 
 [dependencies]

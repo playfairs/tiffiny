@@ -2,10 +2,11 @@
 name = "tiffiny-cli"
 version = "0.1.0"
 edition = "2021"
-authors = ["Tiffiny Studio Team"]
 description = "Command-line interface for Tiffiny Studio"
-license = "MIT"
-repository = "https://github.com/tiffiny-studio/tiffiny"
+license = "GPL-3.0"
+authors = ["playfairs"]
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 keywords = ["cli", "command-line", "media", "databending"]
 categories = ["command-line-utilities"]
 

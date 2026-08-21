@@ -2,9 +2,11 @@
 name = "tiffiny-video"
 version = "0.1.0"
 edition = "2021"
+license = "GPL-3.0"
+authors = ["playfairs"]
+repository = "https://github.com/playfairs/tiffiny"
+homepage = "https://tiffiny.org"
 description = "Video processing and manipulation for Tiffiny Studio"
-authors = ["Tiffiny Studio Development Team"]
-license = "MIT"
 
 [dependencies]
 ffmpeg-next = { version = "7.0", features = [
@@ -12,10 +14,10 @@ ffmpeg-next = { version = "7.0", features = [
   "format",
   "filter",
   "software-scaling",
-  "resampling",
+  "software-resampling",
 ] }
 
-opencv = { version = "0.88", features = ["default", "imgproc", "imgcodecs"] }
+opencv = { version = "0.88", features = ["default", "clang-runtime", "imgproc", "imgcodecs"] }
 
 tokio = { version = "1.0", features = ["full"] }
 
@@ -25,7 +27,7 @@ anyhow = "1.0"
 tracing = "0.1"
 
 parking_lot = "0.12"
-uuid = { version = "1.0", features = ["v4"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 num-traits = "0.2"
