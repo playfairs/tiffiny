@@ -1,6 +1,4 @@
-# TIFFiny
-
-Convert Audio files into Images using TIFF Headers and RAW Data Manipulation.
-
+# [tiffiny](https://tiffiny.org)
+A Databending & Media Reinterpretation Tool written in Rust.
 ---
 
